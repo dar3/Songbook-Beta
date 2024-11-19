@@ -13,6 +13,26 @@
         android:theme="@style/Theme.SongbookBeta"
         tools:targetApi="31">
         <activity
+            android:name=".BonfireSongs"
+            android:exported="false"
+            android:label="@string/title_activity_bonfire_songs"
+            android:theme="@style/Theme.SongbookBeta" />
+        <activity
+            android:name=".FavouriteSongs"
+            android:exported="false"
+            android:label="@string/title_activity_favourite_songs"
+            android:theme="@style/Theme.SongbookBeta" />
+        <activity
+            android:name=".AllSongs"
+            android:exported="false"
+            android:label="@string/title_activity_all_songs"
+            android:theme="@style/Theme.SongbookBeta" />
+        <activity
+            android:name=".LastSongs"
+            android:exported="false"
+            android:label="@string/title_activity_last_songs"
+            android:theme="@style/Theme.SongbookBeta" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
