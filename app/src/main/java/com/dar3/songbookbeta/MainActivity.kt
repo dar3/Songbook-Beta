@@ -45,8 +45,8 @@ data class BottomNavigationItem(
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
     val hasNews: Boolean,
-    val badgeCount: Int? = null
-
+    val badgeCount: Int? = null,
+    val onClick: () -> Unit = {}
 )
 
 
@@ -62,12 +62,17 @@ class MainActivity : ComponentActivity() {
                         selectedIcon = Icons.Filled.Home,
                         unselectedIcon = Icons.Outlined.Home,
                         hasNews = false,
+                        onClick = {}
                     ),
                     BottomNavigationItem(
                         title = "Songs",
                         selectedIcon = Icons.AutoMirrored.Filled.List,
                         unselectedIcon = Icons.AutoMirrored.Outlined.List,
                         hasNews = false,
+                        onClick = {
+                            val intent = Intent(this@MainActivity, AllSongs::class.java)
+                            startActivity(intent)
+                        }
 //                        badgeCount = 45
                     ),
                     BottomNavigationItem(
@@ -75,18 +80,29 @@ class MainActivity : ComponentActivity() {
                         selectedIcon = Icons.Filled.Face,
                         unselectedIcon = Icons.Outlined.Face,
                         hasNews = false,
+//                        need to change it to Songs with some random mechanism
+                        onClick = {val intent = Intent(this@MainActivity, RandomSong::class.java)
+                            startActivity(intent)}
                     ),
                     BottomNavigationItem(
                         title = "Add song",
                         selectedIcon = Icons.Filled.AddCircle,
                         unselectedIcon = Icons.Outlined.AddCircle,
                         hasNews = false,
+                        onClick = {
+                            val intent = Intent(this@MainActivity, AddSong::class.java)
+                            startActivity(intent)
+                        }
                     ),
                     BottomNavigationItem(
                         title = "Settings",
                         selectedIcon = Icons.Filled.Settings,
                         unselectedIcon = Icons.Outlined.Settings,
                         hasNews = false,
+                        onClick = {
+                            val intent = Intent(this@MainActivity, Settings::class.java)
+                            startActivity(intent)
+                        }
                     )
 
                 )
@@ -106,7 +122,8 @@ class MainActivity : ComponentActivity() {
                                         selected = selectedItemIndex == index,
                                         onClick = {
                                             selectedItemIndex = index
-                                            // navController.navigate(item.title)
+                                            item.onClick()
+
                                         },
                                         label = {
                                             Text(text = item.title)
