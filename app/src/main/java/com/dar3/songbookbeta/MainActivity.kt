@@ -2,9 +2,11 @@ package com.dar3.songbookbeta
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.automirrored.outlined.List
@@ -26,6 +28,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,6 +37,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.dar3.songbookbeta.ui.theme.SongbookBetaTheme
 
 data class BottomNavigationItem(
@@ -59,7 +63,7 @@ class MainActivity : ComponentActivity() {
                         hasNews = false,
                     ),
                     BottomNavigationItem(
-                        title = "Bars",
+                        title = "Songs",
                         selectedIcon = Icons.AutoMirrored.Filled.List,
                         unselectedIcon = Icons.AutoMirrored.Outlined.List,
                         hasNews = false,
@@ -92,6 +96,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+
                     Scaffold(
                         bottomBar = {
                             NavigationBar {
@@ -132,8 +137,14 @@ class MainActivity : ComponentActivity() {
                         }
                     ) {
 
+                        //  my code
+                        TextButtonExample(onClick = { Log.d("Text button", "Text button clicked.") })
+
+
+
                     }
                 }
+
             }
         }
     }
@@ -154,3 +165,19 @@ fun GreetingPreview() {
         Greeting("Android")
     }
 }
+
+@Composable
+fun TextButtonExample(onClick: () -> Unit) {
+    TextButton(
+        onClick = { onClick() }
+    ) {
+        Text(
+            text ="Last played songs",
+            modifier = Modifier
+                .padding(16.dp))
+    }
+}
+
+
+
+
