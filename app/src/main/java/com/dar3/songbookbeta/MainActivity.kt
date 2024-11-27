@@ -1,11 +1,9 @@
 package com.dar3.songbookbeta
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -20,24 +18,21 @@ import androidx.compose.material.icons.outlined.AddCircle
 import androidx.compose.material.icons.outlined.Face
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.dar3.songbookbeta.ui.theme.SongbookBetaTheme
 
 data class BottomNavigationItem(
@@ -50,190 +45,203 @@ data class BottomNavigationItem(
 )
 
 
+
+
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             SongbookBetaTheme {
-                val items = listOf(
-                    BottomNavigationItem(
-                        title = "Home",
-                        selectedIcon = Icons.Filled.Home,
-                        unselectedIcon = Icons.Outlined.Home,
-                        hasNews = false,
-                        onClick = {}
-                    ),
-                    BottomNavigationItem(
-                        title = "Songs",
-                        selectedIcon = Icons.AutoMirrored.Filled.List,
-                        unselectedIcon = Icons.AutoMirrored.Outlined.List,
-                        hasNews = false,
-                        onClick = {
-                            val intent = Intent(this@MainActivity, AllSongs::class.java)
-                            startActivity(intent)
-                        }
-//                        badgeCount = 45
-                    ),
-                    BottomNavigationItem(
-                        title = "Random",
-                        selectedIcon = Icons.Filled.Face,
-                        unselectedIcon = Icons.Outlined.Face,
-                        hasNews = false,
-//                        need to change it to Songs with some random mechanism
-                        onClick = {val intent = Intent(this@MainActivity, RandomSong::class.java)
-                            startActivity(intent)}
-                    ),
-                    BottomNavigationItem(
-                        title = "Add song",
-                        selectedIcon = Icons.Filled.AddCircle,
-                        unselectedIcon = Icons.Outlined.AddCircle,
-                        hasNews = false,
-                        onClick = {
-                            val intent = Intent(this@MainActivity, AddSong::class.java)
-                            startActivity(intent)
-                        }
-                    ),
-                    BottomNavigationItem(
-                        title = "Settings",
-                        selectedIcon = Icons.Filled.Settings,
-                        unselectedIcon = Icons.Outlined.Settings,
-                        hasNews = false,
-                        onClick = {
-                            val intent = Intent(this@MainActivity, Settings::class.java)
-                            startActivity(intent)
-                        }
-                    )
+                val navController = rememberNavController()
 
-                )
-                var selectedItemIndex by rememberSaveable {
-                    mutableStateOf(0)
-                }
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                Scaffold(
+                    bottomBar = {
+                        BottomNavigationBar(navController)
+                    }
                 ) {
-
-                    Scaffold(
-                        bottomBar = {
-                            NavigationBar {
-                                items.forEachIndexed { index, item ->
-                                    NavigationBarItem(
-                                        selected = selectedItemIndex == index,
-                                        onClick = {
-                                            selectedItemIndex = index
-                                            item.onClick()
-
-                                        },
-                                        label = {
-                                            Text(text = item.title)
-                                        },
-                                        alwaysShowLabel = false,
-                                        icon = {
-                                            BadgedBox(
-                                                badge = {
-                                                    if(item.badgeCount != null) {
-                                                        Badge {
-                                                            Text(text = item.badgeCount.toString())
-                                                        }
-                                                    } else if(item.hasNews) {
-                                                        Badge()
-                                                    }
-                                                }
-                                            ) {
-                                                Icon(
-                                                    imageVector = if (index == selectedItemIndex) {
-                                                        item.selectedIcon
-                                                    } else item.unselectedIcon,
-                                                    contentDescription = item.title
-                                                )
-                                            }
-                                        }
-                                    )
-                                }
-                            }
-                        }
+                    NavHost(
+                        navController = navController,
+                        startDestination = "home"
                     ) {
-
-
-                        LastSongsButton { buttonText ->
-                            when (buttonText) {
-                                "LastPlayed" -> {
-                                    val intent = Intent(this@MainActivity, LastSongs::class.java)
-                                    startActivity(intent)
-                                }
-                                "AllSongs" -> {
-                                    val intent = Intent(this@MainActivity, AllSongs::class.java)
-                                    startActivity(intent)
-                                }
-                                "FavouriteSongs" -> {
-                                    val intent = Intent(this@MainActivity, FavouriteSongs::class.java)
-                                    startActivity(intent)
-
-                                } "BonfireSongs" -> {
-                                val intent = Intent(this@MainActivity, BonfireSongs::class.java)
-                                startActivity(intent)
-                                }
-                            }
-                        }
-
-
-
-
+                        composable("home") { HomeScreen(navController) }
+                        composable("allSongs") { AllSongsScreen() }
+                        composable("randomSong") { RandomSongScreen() }
+                        composable("addSong") { AddSongScreen() }
+                        composable("settings") { SettingsScreen() }
+                        composable("lastPlayedSongs") { LastSongsScreen() }
+                        composable("favouriteSongs") { FavouriteSongsScreen() }
+                        composable("bonfireSongs") { BonfireSongsScreen() }
                     }
                 }
-
             }
         }
     }
 }
 
 
+
 @Composable
-fun LastSongsButton(onClick: (String) -> Unit) {
-    Column(
-    modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp),
-    verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        TextButton(
-            onClick = { onClick("LastPlayed") }
-        ) {
-            Text(text = "Last played songs",
-                modifier = Modifier
+fun BottomNavigationBar(navController: NavController) {
+    val items = listOf(
+        BottomNavigationItem(
+            title = "Home",
+            selectedIcon = Icons.Filled.Home,
+            unselectedIcon = Icons.Outlined.Home,
+            hasNews = false,
+            onClick = { navController.navigate("home") }
+        ),
+        BottomNavigationItem(
+            title = "Songs",
+            selectedIcon = Icons.AutoMirrored.Filled.List,
+            unselectedIcon = Icons.AutoMirrored.Outlined.List,
+            hasNews = false,
+            onClick = { navController.navigate("allSongs") }
+        ),
+        BottomNavigationItem(
+            title = "Random",
+            selectedIcon = Icons.Filled.Face,
+            unselectedIcon = Icons.Outlined.Face,
+            hasNews = false,
+            onClick = { navController.navigate("randomSong") }
+        ),
+        BottomNavigationItem(
+            title = "Add song",
+            selectedIcon = Icons.Filled.AddCircle,
+            unselectedIcon = Icons.Outlined.AddCircle,
+            hasNews = false,
+            onClick = { navController.navigate("addSong") }
+    ),
 
-            )
-        }
+        BottomNavigationItem(
+            title = "Settings",
+            selectedIcon = Icons.Filled.Settings,
+            unselectedIcon = Icons.Outlined.Settings,
+            hasNews = false,
+            onClick = { navController.navigate("settings") }
+        )
 
-        TextButton(
-            onClick = { onClick("AllSongs") }
-        ) {
-            Text(text = "All songs",
-                modifier = Modifier
+    )
 
-            )
-        }
-
-        TextButton(
-            onClick = { onClick("FavouriteSongs") }
-        ) {
-            Text(text = "Favourite songs",
-                modifier = Modifier
-
-            )
-        }
-
-        TextButton(
-            onClick = { onClick("BonfireSongs") }
-        ) {
-            Text(text = "Bonfire songs",
-                modifier = Modifier
-
+    NavigationBar {
+        items.forEach { item ->
+            NavigationBarItem(
+                selected = false,
+                onClick = item.onClick,
+                label = { Text(text = item.title) },
+                icon = {
+                    Icon(
+                        imageVector = item.selectedIcon,
+                        contentDescription = item.title
+                    )
+                }
             )
         }
     }
 }
+
+
+@Composable
+fun HomeScreen(navController: NavController) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+
+    ) {
+        TextButton(
+            onClick = { navController.navigate("lastPlayedSongs") }
+        ) {
+            Text("Last played songs")
+        }
+
+        TextButton(
+            onClick = { navController.navigate("allSongs") }
+        ) {
+            Text("All songs")
+        }
+
+
+        TextButton(
+            onClick = { navController.navigate("favouriteSongs") }
+        ) {
+            Text("Favourite songs")
+        }
+
+        TextButton(
+            onClick = { navController.navigate("bonfireSongs") }
+        ) {
+            Text("Bonfire songs")
+        }
+    }
+}
+
+@Composable
+fun AllSongsScreen() {
+    Text(
+        text = "It's my life",
+        fontSize = 20.sp,
+        modifier = Modifier
+            .padding(16.dp)
+
+    )
+
+    Text(
+        text = "Bon Jovi",
+        fontSize = 15.sp,
+        lineHeight = 80.sp,
+        modifier = Modifier
+            .padding(16.dp)
+
+    )
+
+
+}
+
+@Composable
+fun BonfireSongsScreen() {
+    Text("Bonfire Songs Screen",
+        modifier = Modifier
+            .padding(16.dp),
+        )
+}
+
+@Composable
+fun FavouriteSongsScreen() {
+    Text("Favourite Songs Screen",
+        modifier = Modifier
+            .padding(16.dp)
+    )
+}
+
+@Composable
+fun LastSongsScreen() {
+    Text("Last Song Screen",
+        modifier = Modifier
+            .padding(16.dp)
+    )
+}
+
+@Composable
+fun RandomSongScreen() {
+    Text("Random Song Screen",
+        modifier = Modifier
+            .padding(16.dp))
+}
+
+@Composable
+fun AddSongScreen() {
+    Text("Add Song Screen",
+        modifier = Modifier
+            .padding(16.dp))
+}
+
+@Composable
+fun SettingsScreen() {
+    Text("Settings Screen",
+        modifier = Modifier
+            .padding(16.dp))
+}
+
 
 
 
