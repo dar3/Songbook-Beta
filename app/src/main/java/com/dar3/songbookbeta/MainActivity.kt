@@ -4,9 +4,13 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.automirrored.outlined.List
@@ -25,8 +29,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -148,32 +154,81 @@ fun HomeScreen(navController: NavController) {
             .fillMaxSize()
 
     ) {
-        TextButton(
-            onClick = { navController.navigate("lastPlayedSongs") }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Last played songs")
+            TextButton(
+                onClick = { navController.navigate("lastPlayedSongs") },
+
+                ) {
+                Text("Last played songs")
+            }
+            Image(
+                painter = painterResource(id = R.drawable.circle_arrow_icon),
+                contentDescription = null,
+                modifier = Modifier.size(20.dp)
+            )
         }
 
-        TextButton(
-            onClick = { navController.navigate("allSongs") }
+
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("All songs")
+            TextButton(
+                onClick = { navController.navigate("favouriteSongs") },
+
+                ) {
+                Text("Favourite songs")
+            }
+            Image(
+                painter = painterResource(id = R.drawable.heart_icon),
+                contentDescription = null,
+                modifier = Modifier.size(25.dp)
+            )
         }
 
 
-        TextButton(
-            onClick = { navController.navigate("favouriteSongs") }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Favourite songs")
+            TextButton(
+                onClick = { navController.navigate("allSongs") },
+
+                ) {
+                Text("All songs")
+            }
+            Image(
+                painter = painterResource(id = R.drawable.three_bars_icon),
+                contentDescription = null,
+                modifier = Modifier.size(25.dp)
+            )
         }
 
-        TextButton(
-            onClick = { navController.navigate("bonfireSongs") }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Bonfire songs")
+            TextButton(
+                onClick = { navController.navigate("bonfireSongs") },
+
+                ) {
+                Text("Bonfire songs")
+            }
+            Image(
+                painter = painterResource(id = R.drawable.bonfire_icon),
+                contentDescription = null,
+                modifier = Modifier.size(25.dp)
+            )
         }
     }
 }
+
+
 
 @Composable
 fun AllSongsScreen() {
