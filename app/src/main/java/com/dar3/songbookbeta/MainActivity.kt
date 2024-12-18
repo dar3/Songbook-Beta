@@ -38,7 +38,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -738,6 +738,7 @@ fun LastSongsScreen() {
 }
 
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun RandomSongScreen() {
 
@@ -795,11 +796,11 @@ fun AddSongScreen() {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        var songName by remember { mutableStateOf("") }
-        var artistName by remember { mutableStateOf("") }
-        var songLyrics by remember { mutableStateOf("") }
-        var songsList by remember { mutableStateOf<List<Song>>(emptyList()) }
-        var errorMessage by remember { mutableStateOf("") }
+        var songName by rememberSaveable { mutableStateOf("") }
+        var artistName by rememberSaveable { mutableStateOf("") }
+        var songLyrics by rememberSaveable { mutableStateOf("") }
+        var songsList by rememberSaveable { mutableStateOf<List<Song>>(emptyList()) }
+        var errorMessage by rememberSaveable { mutableStateOf("") }
 
 
 
