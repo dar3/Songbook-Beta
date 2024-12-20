@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.automirrored.outlined.List
@@ -21,6 +23,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -47,7 +50,6 @@ data class BottomNavigationItem(
 
 
 class MainActivity : ComponentActivity() {
-    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -58,19 +60,26 @@ class MainActivity : ComponentActivity() {
                     bottomBar = {
                         BottomNavigationBar(navController)
                     }
-                ) {
-                    NavHost(
-                        navController = navController,
-                        startDestination = "home"
-                    ) {
-                        composable("home") { HomeScreen(navController) }
-                        composable("allSongs") { AllSongsScreen() }
-                        composable("randomSong") { RandomSongScreen() }
-                        composable("addSong") { AddSongScreen() }
-                        composable("settings") { SettingsScreen() }
-                        composable("lastPlayedSongs") { LastSongsScreen() }
-                        composable("favouriteSongs") { FavouriteSongsScreen() }
+                ) { padding ->
 
+                    Box(modifier = Modifier.padding(padding)) {
+
+
+                        NavHost(
+                            navController = navController,
+                            startDestination = "home",
+
+
+                            ) {
+                            composable("home") { HomeScreen(navController) }
+                            composable("allSongs") { AllSongsScreen() }
+                            composable("randomSong") { RandomSongScreen() }
+                            composable("addSong") { AddSongScreen() }
+                            composable("settings") { SettingsScreen() }
+                            composable("lastPlayedSongs") { LastSongsScreen() }
+                            composable("favouriteSongs") { FavouriteSongsScreen() }
+
+                        }
                     }
                 }
             }
