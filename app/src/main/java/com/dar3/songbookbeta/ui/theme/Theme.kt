@@ -1,6 +1,5 @@
 package com.dar3.songbookbeta.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -18,9 +17,9 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    primary = Green40,
+    secondary = PaleGreen40,
+    tertiary = DarkGreen40
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -37,7 +36,8 @@ private val LightColorScheme = lightColorScheme(
 fun SongbookBetaTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    // turned off for now in order to show the app only colors, will test later after design implementation
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

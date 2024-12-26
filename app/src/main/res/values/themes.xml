@@ -2,4 +2,10 @@
 <resources>
 
     <style name="Theme.SongbookBeta" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.SongbookBeta.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="postSplashScreenTheme">@style/Theme.SongbookBeta</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/songbook_animated_logo</item>
+    </style>
 </resources>

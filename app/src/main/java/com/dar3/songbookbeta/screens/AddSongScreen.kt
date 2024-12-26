@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.dar3.songbookbeta.Song
+import com.dar3.songbookbeta.screens.allsongs.Song
 
 @Composable
 fun AddSongScreen() {

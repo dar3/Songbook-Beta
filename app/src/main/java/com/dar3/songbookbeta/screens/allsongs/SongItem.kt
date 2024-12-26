@@ -1,4 +1,4 @@
-package com.dar3.songbookbeta
+package com.dar3.songbookbeta.screens.allsongs
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
