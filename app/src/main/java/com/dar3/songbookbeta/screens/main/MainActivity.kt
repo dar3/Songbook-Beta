@@ -42,7 +42,9 @@ import com.dar3.songbookbeta.ui.theme.SongbookBetaTheme
 
 class MainActivity : ComponentActivity() {
 
-    private val viewModel by viewModels<MainViewModel>()
+    private val viewModel:MainViewModel by viewModels{
+        AppViewModelProvider.Factory
+    }
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
