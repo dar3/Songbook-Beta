@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface SongDao {
 
     @Insert
-    fun insert(song: Song)
+    suspend fun insert(song: Song)
 
     @Query("SELECT * FROM songs")
     fun getAllSongs():Flow<List<Song>>

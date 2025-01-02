@@ -131,7 +131,7 @@ class MainActivity : ComponentActivity() {
                                 startDestination = "home"
                             ) {
                                 composable(BottomNavItem.Home.route) { HomeScreen(navController) }
-                                composable(BottomNavItem.Songs.route) { AllSongsScreen() }
+                                composable(BottomNavItem.Songs.route) { AllSongsScreen(viewModel) }
                                 composable(BottomNavItem.Random.route) { RandomSongScreen() }
                                 composable(BottomNavItem.AddSong.route) { AddSongScreen() }
                                 composable(BottomNavItem.Settings.route) { SettingsScreen() }
